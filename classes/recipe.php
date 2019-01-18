@@ -6,3 +6,4 @@ class Recipe
 }
 
 $recipe1 = new Recipe;
+s
