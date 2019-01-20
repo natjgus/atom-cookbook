@@ -7,12 +7,13 @@ class Recipe
   private $title;
 
   //Initilizing with an array makes it easier to read and tells
-  public $ingredients = array();
-  public $instructions = array();
-  public $yield;
-  public $tag = array();
-  //Source of all Recipes is Me so I can set dedault
-  public $source = "Nathaniel Gustafson";
+  private $ingredients = array();
+  private $instructions = array();
+  private $yield;
+  private $tags = array();
+
+  //Source of all Recipes is Me so I can set default
+  private $source = "Nathaniel Gustafson";
 
 
   //We are setting a private array for the measurements to set acceptible
@@ -27,6 +28,23 @@ class Recipe
     "quart",
     "gallon"
   );
+
+
+  public function __construct($title = null)
+  {
+    $this->setTitle($title);
+  }
+
+  public function __toString()
+  {
+    $output = "You are calling a " . __CLASS__ . " object with the title \"";
+    $output .= $this->getTitle() . "\"";
+    $output .= "\nIt is stored in " . basename(__FILE__) . " at " . __DIR__ . ".";
+    $output .= "\nThis display is from line " . __LINE__ . " in method " . __METHOD__;
+    $output .="\nOther methods are listed as: \n";
+    $output .= implode("\n", get_class_methods(__CLASS__));
+    return $output;
+  }
 
   public function addIngredient($item, $amount = null, $measure = null)
   {
@@ -45,18 +63,61 @@ class Recipe
 
   }
 
-  //Methods Same Naming convention and visibility as property
-  public function displayRecipe()
+  public function getIngredients()
   {
-    //Reference Yourself with $this when working within the scope of the Methods
-    return $this->title . " by " . $this->source;
+    return $this->ingredients;
   }
+
+  public function addInstruction($string)
+  {
+    $this->instructions[] = $string;
+  }
+
+  public function getInstructions()
+  {
+    return $this->instructions;
+  }
+
+  public function addTag($tag){
+    $this->tags[] = strtolower($tag);
+  }
+
+  public function getTags()
+  {
+    return $this->tags;
+  }
+
+  public function setYield($yield)
+  {
+    $this->yield= $yield;
+  }
+
+  public function getYield()
+  {
+    return $this->yield;
+  }
+
+  public function setSource($source)
+  {
+    $this->source = ucwords($source);
+  }
+
+  public function getSource()
+  {
+    return $this->source;
+  }
+
 
   //Create a setter method to format date before entering it to the object
   public function setTitle($title)
   {
-    //The keyword, this, before the title, gives us access to the object's property.
+    if(empty($title)){
+      $this->title = null;
+    }
+    else
+    {
     $this -> title = ucwords($title);
+  }
   }
 
   public function getTitle()
@@ -65,20 +126,3 @@ class Recipe
   }
 
 }
-
-$recipe1 = new Recipe();
-//Once we create and object we can access it's properties
-//Property name does not start with $ only object name!
-$recipe1->source = "Grandma Natali";
-$recipe1->setTitle("mac and cheese");
-$recipe1->addIngredient("egg", 1, "oz");
-
-
-
-$recipe2 = new Recipe();
-$recipe2->source = "Janali";
-$recipe2->setTitle("scones");
-
-//When calling a function you most reference object it belongs to
-echo $recipe1 -> getTitle();
-echo $recipe2 -> displayRecipe();
