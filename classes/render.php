@@ -8,6 +8,26 @@
      $output .= implode("\n", get_class_methods(__CLASS__));
      return $output;
    }
+
+   public static function listShopping($ingredients_list)
+   {
+     ksort($ingredients_list);
+     return implode("\n", array_keys($ingredients_list));
+   }
+
+   public static function listRecipes($titles)
+   {
+     asort($titles);
+     $output = "";
+     foreach ($titles as $key => $title) {
+       if ($output != ""){
+         $output .= "\n";
+       }
+       $output .= "[$key] $title";
+     }
+     return $output;
+   }
+
    public static function listIngredients($ingredients)
    {
      $output = "";

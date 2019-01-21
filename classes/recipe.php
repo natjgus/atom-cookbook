@@ -24,6 +24,8 @@ class Recipe
     "tbsp",
     "cup",
     "oz",
+    "lb",
+    "fl oz",
     "pint",
     "quart",
     "gallon"
